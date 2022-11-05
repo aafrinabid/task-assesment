@@ -41,5 +41,11 @@ export class TasksService {
      }else{
         return 'no task found to this id'
      }
+
+     
+    }
+    deleteTask(id:string):string{
+      this.tasks=this.tasks.filter(task=>task.id!==id)  
+      return 'deleted successfully'
     }
 }
