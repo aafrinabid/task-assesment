@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import {v1 as uuidv1} from 'uuid'
 import { createTaskDto } from './dto/create-task.dto';
+import { getSingleTaskDto } from './dto/get-single-task.dto';
 
 @Injectable()
 export class TasksService {
@@ -23,8 +24,22 @@ export class TasksService {
         this.tasks.push(task)
         return task
     }
+   
+    getSingleTask(id:string):Task{
+        return this.tasks.find(task=>task.id===id)
+    }
 
-    updateTask(id:string){
-        
+    updateTaskStatus(id:string,status:TaskStatus){
+     let task = this.tasks.find(task=>task.id===id)
+     if(task){
+        let taskIndex=this.tasks.findIndex(task=>task.id===id)
+        let updatedTask={...task,status}
+        let updatedTaskList=[...this.tasks]
+        updatedTaskList[taskIndex]=updatedTask
+        this.tasks=updatedTaskList
+        return updatedTask
+     }else{
+        return 'no task found to this id'
+     }
     }
 }
