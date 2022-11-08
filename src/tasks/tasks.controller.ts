@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { request } from 'http';
 import { createTaskDto } from './dto/create-task.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { Task } from './task.entity';
@@ -10,8 +11,9 @@ export class TasksController {
     constructor(private taskService:TasksService){}
 
     @Get()
-    getAllTasks():Promise<Task[]>{
-        return this.taskService.getAllTask();
+    getAllTasks(@Body('userId') request):Promise<Task[]>{
+      console.log(request,'inside controller')
+        return this.taskService.getAllTask(request);
     }
  
 

@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/auth/user.entity';
 import { Not } from 'typeorm';
 import { createTaskDto } from './dto/create-task.dto';
 import { getSingleTaskDto } from './dto/get-single-task.dto';
@@ -15,9 +16,15 @@ export class TasksService {
     private readonly taskRepository:TaskRepository,
     ){}
 
-    async getAllTask():Promise<Task[]>{
+    async getAllTask(userId:number ):Promise<Task[]>{
         try{
-            const allTask= await Task.find()
+        const user= await User.findOne({where:{id:userId}})  
+            const allTask= await Task.getRepository()
+            .createQueryBuilder('tasks')
+            .leftJoinAndSelect('tasks.user','user')
+            .where('user.id=:userId',{userId})
+            
+            .getMany();
             return allTask
 
         }catch(e){
@@ -31,12 +38,13 @@ export class TasksService {
 
    async createTask(createTaskDto:createTaskDto){
     try{
-        const {title,description}=createTaskDto;
-
+        const {title,description,userId}=createTaskDto;
+        const user= await User.findOne({where:{id:userId}})
         const task=new Task()
         task.title=title;
         task.description= description;
         task.status=TaskStatus.OPEN;
+        task.user=user
         await task.save();
     
         return task
