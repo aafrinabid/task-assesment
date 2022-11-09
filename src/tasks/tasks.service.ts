@@ -36,9 +36,11 @@ export class TasksService {
 
   
 
-   async createTask(createTaskDto:createTaskDto){
+   async createTask(createTaskDto:createTaskDto,req:any){
     try{
-        const {title,description,userId}=createTaskDto;
+        console.log(req.user.id)
+        const userId=req.user.id
+        const {title,description}=createTaskDto;
         const user= await User.findOne({where:{id:userId}})
         const task=new Task()
         task.title=title;

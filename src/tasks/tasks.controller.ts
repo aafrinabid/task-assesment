@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { request } from 'http';
 import { createTaskDto } from './dto/create-task.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { Task } from './task.entity';
@@ -34,9 +33,10 @@ export class TasksController {
     }  
 
     @Post()
+    @UseGuards(AuthGuard('jwt'))
     @UsePipes(ValidationPipe)
-    createTask(@Body() createTaskDto:createTaskDto):Promise<Task>{
-        return this.taskService.createTask(createTaskDto)
+    createTask(@Body() createTaskDto:createTaskDto,@Request()req:any):Promise<Task>{
+        return this.taskService.createTask(createTaskDto,req)
 
     }
 
