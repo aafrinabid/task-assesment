@@ -1,17 +1,12 @@
-import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import {  Injectable, InternalServerErrorException} from '@nestjs/common';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
-import { UserRepository } from './user.repository';
-import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt'
 
-import * as jwt from 'jsonwebtoken'
 import { UsersRepository } from './users.repository';
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectRepository(UserRepository) private userRepository:UserRepository,
         private jwtService:JwtService
         ){}
 

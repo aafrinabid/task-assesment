@@ -1,5 +1,5 @@
 import { Task } from "./task.entity";
-import { AppDataSource } from "./app-data-source";
+import { AppDataSource } from "../app-data-source";
 import { User } from "src/auth/user.entity";
 import { TaskStatus } from "./task.model";
 import { createTaskDto } from "./dto/create-task.dto";

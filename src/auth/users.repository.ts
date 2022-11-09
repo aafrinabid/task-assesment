@@ -1,5 +1,5 @@
 import { ConflictException } from "@nestjs/common";
-import { AppDataSource } from "src/tasks/app-data-source";
+import { AppDataSource } from "src/app-data-source";
 import { AuthCredentialsDto } from "./dto/auth-credentials.dto";
 import { User } from "./user.entity";
 import * as bcrypt from 'bcrypt';
