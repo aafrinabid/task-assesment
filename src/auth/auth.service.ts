@@ -3,12 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
+import {JwtService} from '@nestjs/jwt'
+
 import * as jwt from 'jsonwebtoken'
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectRepository(UserRepository) private userRepository:UserRepository
+        @InjectRepository(UserRepository) private userRepository:UserRepository,
+        private jwtService:JwtService
         ){}
 
       async  signUp(authCredentialsDto:AuthCredentialsDto):Promise<User|void>{
@@ -37,9 +40,10 @@ export class AuthService {
                 const {username,password}=authCredentialsDto
                 const user= await User.findOne({where:{username}})
                 if(user && await bcrypt.compare(password,user.password)){
-                    const token=jwt.sign({id:user.id},'jwtsecret',{
-                        expiresIn:3000,
-                    })
+                    // const token=jwt.sign({id:user.id},'jwtsecret',{
+                    //     expiresIn:3000,
+                    // })
+                    const token =  this.jwtService.sign({id:user.id})
                     return {username:user.username,token}
                 }else{
                     return 'password or username is wrong'

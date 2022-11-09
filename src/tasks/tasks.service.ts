@@ -16,13 +16,13 @@ export class TasksService {
     private readonly taskRepository:TaskRepository,
     ){}
 
-    async getAllTask(userId:number ):Promise<Task[]>{
+    async getAllTask(req:any ):Promise<Task[]>{
         try{
-        const user= await User.findOne({where:{id:userId}})  
+        const user= await User.findOne({where:{id:req.user.id}})  
             const allTask= await Task.getRepository()
             .createQueryBuilder('tasks')
             .leftJoinAndSelect('tasks.user','user')
-            .where('user.id=:userId',{userId})
+            .where('user.id=:userId',{userId:req.user.id})
             
             .getMany();
             return allTask
@@ -58,6 +58,13 @@ export class TasksService {
 
    async getTaskById (id:number):Promise<Task>{
     try{
+        const allTask= await Task.getRepository()
+            .createQueryBuilder('tasks')
+            .leftJoinAndSelect('tasks.user','user')
+            .where('task.userId=:userId',{userId:1})
+            .andWhere('task.id=:id',{id})
+            .getOne();
+            console.log(allTask,'all task is here')
         const found=await Task.findOne({where:{id}});
         if(!found){
             throw new NotFoundException(`Task with this ${id} not find`)

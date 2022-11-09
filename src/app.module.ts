@@ -6,7 +6,7 @@ import { TasksController } from './tasks/tasks.controller';
 import { TasksModule } from './tasks/tasks.module';
 import { TasksService } from './tasks/tasks.service';
 import { AuthModule } from './auth/auth.module';
-import { AuthMiddleware } from './auth.middleware';
+// import { AuthMiddleware } from './auth.middleware';
 
 @Module({
   imports: [
@@ -14,11 +14,13 @@ import { AuthMiddleware } from './auth.middleware';
     TasksModule,
     AuthModule]
 })
-export class AppModule implements NestModule{
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-    .apply(AuthMiddleware)
-    .forRoutes('tasks')
-  }
+export class AppModule 
+// implements NestModule
+{
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //   .apply(AuthMiddleware)
+  //   .forRoutes('tasks')
+  // }
 
 }
