@@ -10,7 +10,7 @@ export class UserRepository extends Repository<User>{
    const user= new User
    user.username= username;
    user.password= password;
-   user.save();
+   await user.save();
 
    }catch(e){
     console.log(e)

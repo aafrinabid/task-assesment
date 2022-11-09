@@ -18,14 +18,21 @@ export class TasksController {
     }
  
 
+    @Get('/alltasks')
+    findAllTask(){
+      return this.taskService.findAllTasks()
+    }
+
      
     @Get('/:id')
+    @UseGuards(AuthGuard('jwt'))
     getSingleTask(@Param('id',ParseIntPipe) id:number,@Body('userId')userId:number){
         console.log(id,userId)
         return this.taskService.getTaskById(id)
       }
  
     @Patch('/:id')
+    @UseGuards(AuthGuard('jwt'))
     @UsePipes(ValidationPipe)
     updataTaskStatus(@Param('id',ParseIntPipe)id:number ,@Body('status',TaskStatusValidationPipe)status:TaskStatus){
         
@@ -41,6 +48,7 @@ export class TasksController {
     }
 
     @Delete('/:id')
+    @UseGuards(AuthGuard('jwt'))
     deleteTask(@Param('id') id:number){
       return this.taskService.deleteTask(id)
     }
