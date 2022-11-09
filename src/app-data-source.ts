@@ -1,4 +1,4 @@
-import { User } from "src/auth/user.entity";
+import { User } from "../src/auth/user.entity";
 import { DataSource } from "typeorm";
 import { Task } from "./tasks/task.entity";
 

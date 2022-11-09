@@ -26,8 +26,8 @@ export class TasksController {
      
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'))
-    getSingleTask(@Param('id',ParseIntPipe) id:number,@Body('userId')userId:number){
-        console.log(id,userId)
+    getSingleTask(@Param('id',ParseIntPipe) id:number):Promise<Task>{
+        console.log(id)
         return this.taskService.getTaskById(id)
       }
  

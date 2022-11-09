@@ -1,6 +1,6 @@
 import { Task } from "./task.entity";
 import { AppDataSource } from "../app-data-source";
-import { User } from "src/auth/user.entity";
+import { User } from "../auth/user.entity";
 import { TaskStatus } from "./task.model";
 import { createTaskDto } from "./dto/create-task.dto";
 import { NotFoundException } from "@nestjs/common";
