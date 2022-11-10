@@ -15,6 +15,7 @@ export const TasksRepository = AppDataSource.getRepository(Task).extend({
             const allTask= await Task.getRepository()
             .createQueryBuilder('tasks')
             .leftJoinAndSelect('tasks.user','user')
+            .select(['tasks.id','tasks.title','tasks.description','user.username'])
             .where('user.id=:userId',{userId:req.user.id})
             
             .getMany();
