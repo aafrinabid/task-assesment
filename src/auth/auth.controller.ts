@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post, Request, UseGuards, ValidationPipe } from 
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
-import {AuthGuard} from '@nestjs/passport'
 
 @Controller('auth')
 export class AuthController {
@@ -20,10 +19,6 @@ export class AuthController {
         return this.authService.signIn(authCredentialsDto)
     }
 
-    @Get('/user')
-    @UseGuards(AuthGuard('jwt'))
-    getCurrentUser(@Request()req){
-        return req.user
-    }
+   
 
 }

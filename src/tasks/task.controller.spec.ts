@@ -15,12 +15,10 @@ describe('TaskController',()=>{
 
     beforeEach(async () =>{
         const module:TestingModule=await Test.createTestingModule({
-            // imports:[TypeOrmModule.forFeature([Task,User])],
             controllers:[TasksController],
             providers:[TasksService]
         })
-        // .overrideProvider(TasksService)
-        // .useValue(mockUserService)
+
         .compile();
         controller = module.get<TasksController>(TasksController)
         service =  module.get<TasksService>(TasksService)
