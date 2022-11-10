@@ -7,12 +7,17 @@ import { NotFoundException } from "@nestjs/common";
 
 export const TasksRepository = AppDataSource.getRepository(Task).extend({
     async findAllTask(){
-       const tasks=await Task.find()
-       return tasks
+        try{
+            const tasks=await Task.find()
+            return tasks
+     
+        }catch(e){
+            console.log(e)
+        }
 
     },
-    async getAllTask(req:any){
-            const allTask= await Task.getRepository()
+    async getAllTaskForAUser(req:any){
+            try{const allTask= await Task.getRepository()
             .createQueryBuilder('tasks')
             .leftJoinAndSelect('tasks.user','user')
             .select(['tasks.id','tasks.title','tasks.description','user.username'])
@@ -20,9 +25,12 @@ export const TasksRepository = AppDataSource.getRepository(Task).extend({
             
             .getMany();
             return allTask
+        }catch(e){
+            console.log(e)
+        }
     },
     async createTask(createTaskDto:createTaskDto,req:any){
-        console.log(req.user.id)
+     try{
         const userId=req.user.id
         const {title,description}=createTaskDto;
         const user= await User.findOne({where:{id:userId}})
@@ -32,20 +40,26 @@ export const TasksRepository = AppDataSource.getRepository(Task).extend({
         task.status=TaskStatus.OPEN;
         task.user=user
         await task.save();
-    
         return task
+     }catch(e){
+        console.log(e)
+     }
     },
     async getTasksById(id:number){
+       try{ 
         const found=await Task.findOne({where:{id}});
         if(!found){
             throw new NotFoundException(`Task with this ${id} not find`)
         }
 
         return found
-
+     }catch(e){
+    console.log(e)
+    }
     },
     async updateTaskStatus(id:number,status:TaskStatus){
-        let task= await this.getTaskById(id)
+       try {
+         let task= await this.getTaskById(id)
         if(task){
             task.status=status
             await task.save()
@@ -53,15 +67,23 @@ export const TasksRepository = AppDataSource.getRepository(Task).extend({
         }else{
             throw new NotFoundException('no task for this'+id+' '+'found')
         }
+    }catch(e){
+        console.log(e)
+    }
     },
     async delteTask(id:number){
-        const task=await this.getTaskById(id)
-        if(task){
-
-            await Task.delete(id)
-        }else{
-            throw new NotFoundException('no task for this id is found')
+        try{
+            const task=await this.getTaskById(id)
+            if(task){
+    
+                await Task.delete(id)
+            }else{
+                throw new NotFoundException('no task for this id is found')
+            }
+        }catch(e){
+        console.log(e)
         }
+     
     }
 })
 

@@ -23,8 +23,8 @@ describe('TestService', () => {
 
   it('should get all task for a particular user',async()=>{
     let result:Promise<Task[]>
-    jest.spyOn(mockTaskRepository,'getAllTask').mockImplementation(()=>result)
-    expect(await service.getAllTask({user:{id:1}})).toBe(result)
+    jest.spyOn(mockTaskRepository,'getAllTaskForAUser').mockImplementation(()=>result)
+    expect(await service.getAllTaskForAUser({user:{id:1}})).toBe(result)
     
   })
   it('get task by Id',async()=>{

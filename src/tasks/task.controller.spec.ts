@@ -34,8 +34,8 @@ describe('TaskController',()=>{
     })
     it('get Tasks for user',async()=>{
         let result:Promise<Task[]>
-        jest.spyOn(service,'getAllTask').mockImplementation(()=>result)
-        expect(await controller.getAllTasks(1)).toBe(result)
+        jest.spyOn(service,'getAllTaskForAUser').mockImplementation(()=>result)
+        expect(await controller.getAllTasksForAUser(1)).toBe(result)
     })
     it('get task by id',async ()=>{
         let result:Promise<Task>;
