@@ -10,9 +10,9 @@ export class TasksService {
   
     constructor(){}
 
-    async getAllTask(req:any ):Promise<Task[]>{
+    async getAllTaskForAUser(req:any ):Promise<Task[]>{
         try{
-        return TasksRepository.getAllTask(req)
+        return TasksRepository.getAllTaskForAUser(req)
 
         }catch(e){
             console.log(e)
@@ -22,8 +22,13 @@ export class TasksService {
     }
 
     async findAllTasks(){
-       const alltask=await TasksRepository.findAllTask()
-       return alltask
+        try{
+
+            const alltask=await TasksRepository.findAllTask()
+            return alltask
+        }catch(e){
+            console.log(e)
+        }
     }
 
   
@@ -50,7 +55,7 @@ export class TasksService {
    
 
 
-    async updateTaskStatus(id:number,status:TaskStatus){
+    async updateTaskStatus(id:number,status:TaskStatus):Promise<Task>{
         try{
           
             return TasksRepository.updateTaskStatus(id,status)

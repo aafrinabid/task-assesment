@@ -22,13 +22,13 @@ export const UsersRepository = AppDataSource.getRepository(User).extend({
        await user.save();
 
     },
-    async singIn(authCredentialsDto:AuthCredentialsDto,jwtService:JwtService){
+    async singIn(authCredentialsDto:AuthCredentialsDto):Promise<User>{
         const {username,password}=authCredentialsDto
         const user= await User.findOne({where:{username}})
         if(user && await bcrypt.compare(password,user.password)){
-          
-            const token =  jwtService.sign({id:user.id})
-            return {username:user.username,token}
-    }
+                      return user
+          }else{
+            throw new ConflictException('user or password is wrong')
+          }
 }
 })

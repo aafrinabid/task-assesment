@@ -12,8 +12,8 @@ export class TasksController {
 
     @Get()
     @UseGuards(AuthGuard('jwt'))
-    getAllTasks(@Request()req:any):Promise<Task[]>{
-        return this.taskService.getAllTask(req);
+    getAllTasksForAUser(@Request()req:any):Promise<Task[]>{
+        return this.taskService.getAllTaskForAUser(req);
     }
  
 
