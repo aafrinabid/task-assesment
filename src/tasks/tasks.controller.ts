@@ -13,7 +13,6 @@ export class TasksController {
     @Get()
     @UseGuards(AuthGuard('jwt'))
     getAllTasks(@Request()req:any):Promise<Task[]>{
-      console.log(req.user,'inside controller')
         return this.taskService.getAllTask(req);
     }
  
@@ -27,7 +26,6 @@ export class TasksController {
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'))
     getSingleTask(@Param('id',ParseIntPipe) id:number):Promise<Task>{
-        console.log(id)
         return this.taskService.getTaskById(id)
       }
  
@@ -50,7 +48,7 @@ export class TasksController {
     @Delete('/:id')
     @UseGuards(AuthGuard('jwt'))
     deleteTask(@Param('id') id:number){
-      return this.taskService.deleteTask(id)
+    return this.taskService.deleteTask(id)
     }
 
     

@@ -15,9 +15,3 @@ export const AppDataSource= new DataSource({
 })
 
 AppDataSource.initialize()
-.then(()=>{
-    console.log('database initiliased')
-})
-.catch((err)=>{
-    console.log(err)
-})

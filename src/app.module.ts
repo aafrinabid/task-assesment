@@ -14,13 +14,4 @@ import { AuthModule } from './auth/auth.module';
     TasksModule,
     AuthModule]
 })
-export class AppModule 
-// implements NestModule
-{
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer
-  //   .apply(AuthMiddleware)
-  //   .forRoutes('tasks')
-  // }
-
-}
+export class AppModule {}
