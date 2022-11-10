@@ -21,7 +21,7 @@ describe('TestService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should get all task',async()=>{
+  it('should get all task for a particular user',async()=>{
     let result:Promise<Task[]>
     jest.spyOn(mockTaskRepository,'getAllTask').mockImplementation(()=>result)
     expect(await service.getAllTask({user:{id:1}})).toBe(result)

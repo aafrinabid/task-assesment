@@ -18,9 +18,12 @@ export class AuthService {
            }
         }
 
-        async signIn(authCredentialsDto:AuthCredentialsDto):Promise<{}>{
+        async signIn(authCredentialsDto:AuthCredentialsDto):Promise<{username:string,token:string}>{
             try{
-                return UsersRepository.singIn(authCredentialsDto,this.jwtService)
+              const user =  await UsersRepository.singIn(authCredentialsDto)
+              const token =  this.jwtService.sign({id:user.id})
+              return {username:user.username,token:token}
+              
             }catch(e){
                 console.log(e)
             }
