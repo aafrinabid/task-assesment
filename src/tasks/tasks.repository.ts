@@ -17,7 +17,8 @@ export const TasksRepository = AppDataSource.getRepository(Task).extend({
 
     },
     async getAllTaskForAUser(req:any){
-            try{const allTask= await Task.getRepository()
+            try{
+                const allTask= await Task.getRepository()
             .createQueryBuilder('tasks')
             .leftJoinAndSelect('tasks.user','user')
             .select(['tasks.id','tasks.title','tasks.description','user.username'])
